@@ -1,9 +1,7 @@
 require('dotenv').config({
     path: '.env.local'
   });
-  require('dotenv').config({
-    path: '.env.local.contacto'
-  });
+ 
   const express = require('express');
   const cors = require('cors');
   const mongoose = require('mongoose');
