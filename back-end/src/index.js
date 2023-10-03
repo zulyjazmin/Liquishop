@@ -6,15 +6,19 @@ require('dotenv').config({
   const cors = require('cors');
   const mongoose = require('mongoose');
   const altaRoutes = require('./routes/altaRoutes');
-  const contactoRoutes = require('./routes/contactoRoutes'); // Importa las rutas de contacto
+  const contactoRoutes = require('./routes/contactoRoutes'); 
+  const productRoutes = require('./routes/productRoutes');// Importa las rutas de contacto
   
   const app = express();
   
   app.use(cors());
   app.use(express.json());
   
+
+  app.use('/catalogo', productRoutes);
   app.use('/', altaRoutes);
-  app.use('/contacto', contactoRoutes); // Usa las rutas de contacto en '/contacto'
+  app.use('/contacto', contactoRoutes); 
+  
   
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'Error de conexión a MongoDB:'));
