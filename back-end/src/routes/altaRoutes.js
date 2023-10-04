@@ -7,7 +7,7 @@ const altaModelsProducto = require('../models/altaModelsProducto');
 
 const imageDir = (imageName) => `images/${imageName}`;
 
-// Configura multer para que guarde los archivos en la carpeta "images"
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'images/');
@@ -22,11 +22,11 @@ const uploads = multer({ storage });
 altaRoutes.post('/alta', uploads.single('imagen'), async (req, res) => {
   try {
     if (!req.file) {
-      // Si req.file es nulo, significa que no se ha subido ningún archivo.
+      
       throw new Error('No se ha subido ningún archivo');
     }
 
-    // Copia el archivo al directorio de imágenes
+   
     fs.copyFile(req.file.path, imageDir(req.file.originalname), async (err) => {
       if (err) {
         console.error('Error al copiar el archivo:', err);
@@ -34,10 +34,10 @@ altaRoutes.post('/alta', uploads.single('imagen'), async (req, res) => {
       } else {
         console.log('Archivo copiado con éxito');
         
-        // Ahora puedes guardar los datos en la base de datos
+       
         const { nombre, precio, stock, marca, descripcionCorta, descripcionLarga, categoria, envioSinCargo } = req.body;
         
-        // Crea un nuevo documento en la colección "altaProductos"
+       
         const nuevoProducto = new altaModelsProducto({
           nombre,
           precio,
@@ -47,15 +47,15 @@ altaRoutes.post('/alta', uploads.single('imagen'), async (req, res) => {
           descripcionLarga,
           categoria,
           envioSinCargo,
-          imagen: imageDir(req.file.originalname), // La ubicación de la imagen en el sistema de archivos
+          imagen: imageDir(req.file.originalname), 
         });
 
-        // Guarda el producto en la base de datos
+       
         await nuevoProducto.save();
 
         console.log('Producto guardado en la base de datos:', nuevoProducto);
 
-        // Responde con éxito
+       
         res.status(201).json({ message: 'Producto creado con éxito', producto: nuevoProducto });
       }
     });

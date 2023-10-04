@@ -1,12 +1,15 @@
-// routes/productRoutes.js
+
 
 const express = require('express');
 const router = express.Router();
-const productController = require('../controllers/productController'); // Importa el controlador de productos
+const productController = require('../controllers/productController'); 
 
-// Ruta para obtener todos los productos desde la base de datos
-router.get('/productos', productController.getAllProducts);
 
-// Otras rutas para agregar, editar o eliminar productos si es necesario
+router.get('/productos', (req, res) => {
+  console.log('Llamada a /catalogo/productos');
+  productController.getAllProducts(req, res);
+});
+
+
 
 module.exports = router;
